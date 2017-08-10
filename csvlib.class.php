@@ -18,7 +18,7 @@
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
  * @package    blocks
- * @subpackage coursereport
+ * @subpackage report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */

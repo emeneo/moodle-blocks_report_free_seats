@@ -18,16 +18,16 @@
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
  * @package    blocks
- * @subpackage coursereport
+ * @subpackage report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_coursereport_edit_form extends block_edit_form {
+class block_report_free_seats_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
-        $mform->addElement( 'header', 'configheader', get_string('blocksettings', 'block_coursereport') );
+        $mform->addElement( 'header', 'configheader', get_string('blocksettings', 'block_report_free_seats') );
         $options = array(
             '7' => '1',
             '14' => '2',
@@ -40,13 +40,15 @@ class block_coursereport_edit_form extends block_edit_form {
             '63' => '9',
             '70' => '10',
             );
-        $select = $mform->addElement( 'select', 'config_weeks', get_string('blockweeks', 'block_coursereport'), $options );
+        $select = $mform->addElement( 'select', 'config_weeks', get_string('blockweeks', 'block_report_free_seats'), $options );
         $select->setSelected('28');
-        $mform->addHelpButton('config_weeks', 'blockweeks', 'block_coursereport');
-        // $mform->addElement('html', '<label><strong>'.get_string('enrolment_plugins', 'block_coursereport').'</strong></label>');
-        $mform->addElement('advcheckbox', 'config_selfenrol', get_string('self_enrol', 'block_coursereport'));
-        $mform->addHelpButton('config_selfenrol', 'self_enrol', 'block_coursereport');
-        $mform->addElement('advcheckbox', 'config_waitlistenrol', get_string('waitlist_enrol', 'block_coursereport'));
-        $mform->addHelpButton('config_waitlistenrol', 'waitlist_enrol', 'block_coursereport');
+        $mform->addHelpButton('config_weeks', 'blockweeks', 'block_report_free_seats');
+        // $mform->addElement('html', '<label><strong>'.get_string('enrolment_plugins', 'block_report_free_seats').'</strong></label>');
+        $mform->addElement('advcheckbox', 'config_selfenrol', get_string('self_enrol', 'block_report_free_seats'));
+		$mform->setDefault('config_selfenrol', 1);
+        $mform->addHelpButton('config_selfenrol', 'self_enrol', 'block_report_free_seats');
+        $mform->addElement('advcheckbox', 'config_waitlistenrol', get_string('waitlist_enrol', 'block_report_free_seats'));
+		$mform->setDefault('config_waitlistenrol', 1);
+        $mform->addHelpButton('config_waitlistenrol', 'waitlist_enrol', 'block_report_free_seats');
     }
 }

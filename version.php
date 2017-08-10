@@ -18,7 +18,7 @@
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
  * @package    blocks
- * @subpackage coursereport
+ * @subpackage report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version    = 2016122900;
 $plugin->requires   = 2010112400;
-$plugin->component  = 'block_coursereport';
+$plugin->component  = 'block_report_free_seats';
 $plugin->cron       = 0;
 $plugin->maturity   = MATURITY_STABLE;
 $plugin->release    = 'Free seats report version 2016122900';

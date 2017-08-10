@@ -18,7 +18,7 @@
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
  * @package    blocks
- * @subpackage coursereport
+ * @subpackage report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
@@ -32,11 +32,11 @@ function user_download_csv($weeks, $self, $waitlist) {
     require_once('csvlib.class.php');
 
     $fields = array(
-            'fullname'  => get_string('coursename', 'block_coursereport'),
-            'category'  => get_string('category', 'block_coursereport'),
-            'startdate' => get_string('startdate', 'block_coursereport'),
-            'freeseats' => get_string('freeseats', 'block_coursereport'),
-            'enrolmax_users' => get_string('maxseats', 'block_coursereport')
+            'fullname'  => get_string('coursename', 'block_report_free_seats'),
+            'category'  => get_string('category', 'block_report_free_seats'),
+            'startdate' => get_string('startdate', 'block_report_free_seats'),
+            'freeseats' => get_string('freeseats', 'block_report_free_seats'),
+            'enrolmax_users' => get_string('maxseats', 'block_report_free_seats')
             );
     $filename = clean_filename('Course Report');
 

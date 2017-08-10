@@ -23,7 +23,7 @@
  */
 
 $string['pluginname']                 = 'Free seats report';
-$string['coursereport']               = 'Courses with free seats';
+$string['report_free_seats']          = 'Free seats report';
 $string['getreport']                  = 'Get report';
 $string['blocksettings']              = 'General settings';
 $string['blockweeks']                 = 'Upcoming weeks';
@@ -33,8 +33,8 @@ $string['startdate']                  = 'Start date';
 $string['freeseats']                  = 'Free seats';
 $string['category']                   = 'Category';
 $string['maxseats']                   = 'Max seats';
-$string['coursereport:addinstance']   = 'Courses with free seats';
-$string['coursereport:myaddinstance'] = 'Courses with free seats';
+$string['report_free_seats:addinstance']   = 'Courses with free seats';
+$string['report_free_seats:myaddinstance'] = 'Courses with free seats';
 $string['self_enrol']                 = 'Self enrolment';
 $string['self_enrol_help']            = 'Tick if the report should include courses with active Self enrolment plugin';
 $string['waitlist_enrol']             = 'Waitlist enrolment';

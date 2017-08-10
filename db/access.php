@@ -18,7 +18,7 @@
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
  * @package    blocks
- * @subpackage coursereport
+ * @subpackage report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'block/coursereport:myaddinstance' => array(
+    'block/report_free_seats:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
@@ -37,7 +37,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
     ),
 
-    'block/coursereport:addinstance' => array(
+    'block/report_free_seats:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',

@@ -18,17 +18,17 @@
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
  * @package    blocks
- * @subpackage coursereport
+ * @subpackage report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_coursereport extends block_base {
+class block_report_free_seats extends block_base {
 
     function init() {
-        $this->title = get_string('coursereport', 'block_coursereport');
+        $this->title = get_string('report_free_seats', 'block_report_free_seats');
     }
 
     function applicable_formats() {
@@ -41,7 +41,7 @@ class block_coursereport extends block_base {
             return $this->content;
         }
 
-        $formattr = array('action' => $CFG->wwwroot.'/blocks/coursereport/generate_report.php', 'method' => 'POST');
+        $formattr = array('action' => $CFG->wwwroot.'/blocks/report_free_seats/generate_report.php', 'method' => 'POST');
         $inputattr1 = array('type' => 'hidden', 'name' => 'weeks', 'value' => @$this->config->weeks);
         $inputattr2 = array('type' => 'hidden', 'name' => 'self', 'value' => @$this->config->selfenrol);
         $inputattr3 = array('type' => 'hidden', 'name' => 'waitlist', 'value' => @$this->config->waitlistenrol);
@@ -51,7 +51,7 @@ class block_coursereport extends block_base {
         $this->content->text .= html_writer::empty_tag( 'input', $inputattr1);
         $this->content->text .= html_writer::empty_tag( 'input', $inputattr2);
         $this->content->text .= html_writer::empty_tag( 'input', $inputattr3);
-        $this->content->text .= html_writer::tag( 'button', get_string( 'getreport', 'block_coursereport' ), $submitattr );
+        $this->content->text .= html_writer::tag( 'button', get_string( 'getreport', 'block_report_free_seats' ), $submitattr );
         $this->content->text .= html_writer::end_tag('form');
 
         return $this->content;
