@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
+ *
+ * @package    blocks
+ * @subpackage coursereport
+ * @copyright  2014 onwards emeneo (http://www.emeneo.com)
+ * @author     Flotter Totte (flottertotte@emeneo.com)
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -71,7 +94,7 @@ class csv_export_writer {
      * @param array $row  An array of values.
      */
     public function add_data($row) {
-        if(!isset($this->path)) {
+        if (!isset($this->path)) {
             $this->set_temp_file_path();
             $this->fp = fopen($this->path, 'w+');
         }
@@ -89,7 +112,7 @@ class csv_export_writer {
         fseek($this->fp, 0);
         $returnstring = '';
         while (($content = fgets($this->fp)) !== false) {
-            if (!$return){
+            if (!$return) {
                 echo $content;
             } else {
                 $returnstring .= $content;
@@ -126,7 +149,7 @@ class csv_export_writer {
         if (is_https()) { // HTTPS sites - watch out for IE! KB812935 and KB316431.
             header('Cache-Control: max-age=10');
             header('Pragma: ');
-        } else { //normal http - prevent caching at all cost
+        } else { // normal http - prevent caching at all cost
             header('Cache-Control: private, must-revalidate, pre-check=0, post-check=0, max-age=0');
             header('Pragma: no-cache');
         }
@@ -463,7 +486,7 @@ class csv_import_reader {
      */
     public static function get_delimiter_list() {
         global $CFG;
-        $delimiters = array('comma'=>',', 'semicolon'=>';', 'colon'=>':', 'tab'=>'\\t');
+        $delimiters = array('comma' => ',', 'semicolon' => '; ','colon' => ':', 'tab' => '\\t');
         if (isset($CFG->CSV_DELIMITER) and strlen($CFG->CSV_DELIMITER) === 1 and !in_array($CFG->CSV_DELIMITER, $delimiters)) {
             $delimiters['cfg'] = $CFG->CSV_DELIMITER;
         }
