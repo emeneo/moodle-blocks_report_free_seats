@@ -38,7 +38,7 @@ function user_download_csv($weeks, $self, $waitlist) {
             'freeseats' => get_string('freeseats', 'block_report_free_seats'),
             'enrolmax_users' => get_string('maxseats', 'block_report_free_seats')
             );
-    $filename = clean_filename('Course Report');
+    $filename = clean_filename('Free_seats_report');
 
     /* ob_end_clean(); */
     if (ob_get_contents()) ob_end_clean();
