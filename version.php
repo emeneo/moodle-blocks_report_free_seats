@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version    = 2017082900;
+$plugin->version    = 2018101000;
 $plugin->requires   = 2010112400;
 $plugin->component  = 'block_report_free_seats';
 $plugin->cron       = 0;
 $plugin->maturity   = MATURITY_STABLE;
-$plugin->release    = 'Free seats report version 3.1-b';
+$plugin->release    = 'Free seats report version 3.5-a';
