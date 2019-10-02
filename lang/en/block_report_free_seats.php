@@ -40,3 +40,4 @@ $string['self_enrol_help']            = 'Tick if the report should include cours
 $string['waitlist_enrol']             = 'Waitlist enrolment';
 $string['waitlist_enrol_help']        = 'Tick if the report should include courses with active Waitlist enrolment plugin';
 $string['enrolment_plugins']          = 'Enrolment plugins';
+$string['privacy:metadata'] 		  = 'This report block does not export any user related data.';
