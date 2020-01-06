@@ -24,8 +24,13 @@
  */
 
 require_once('../../config.php');
+
+$weeks=required_param('weeks', PARAM_INT);
+$self=required_param('self',PARAM_INT);
+$waitlist=required_param('waitlist',PARAM_INT);
+
 require_login();
-user_download_csv($_POST['weeks'], $_POST['self'], $_POST['waitlist']);
+user_download_csv($weeks, $self, $waitlist);
 
 function user_download_csv($weeks, $self, $waitlist) {
     global $DB;
