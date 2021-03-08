@@ -17,8 +17,7 @@
 /**
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
- * @package    blocks
- * @subpackage report_free_seats
+ * @package    block_report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
@@ -27,15 +26,20 @@ defined('MOODLE_INTERNAL') || die();
 
 class block_report_free_seats extends block_base {
 
-    function init() {
+    /**
+     * Sets the block title
+     *
+     * @return void
+     */
+    public function init() {
         $this->title = get_string('report_free_seats', 'block_report_free_seats');
     }
 
-    function applicable_formats() {
+    public function applicable_formats() {
         return array('site' => true);
     }
 
-    function get_content() {
+    public function get_content() {
         global $CFG;
         if ( $this->content !== null ) {
             return $this->content;

@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Free seats report language definition
  *
- * @package    block_blog_menu
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @package    block_report_free_seats
+ * @copyright  emeneo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -40,4 +40,4 @@ $string['self_enrol_help']            = 'Tick if the report should include cours
 $string['waitlist_enrol']             = 'Waitlist enrolment';
 $string['waitlist_enrol_help']        = 'Tick if the report should include courses with active Waitlist enrolment plugin';
 $string['enrolment_plugins']          = 'Enrolment plugins';
-$string['privacy:metadata'] 		  = 'This report block does not export any user related data.';
+$string['privacy:metadata']           = 'This report block does not export any user related data.';

@@ -17,17 +17,16 @@
 /**
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
- * @package    blocks
- * @subpackage report_free_seats
+ * @package    blocks_report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
 
 require_once('../../config.php');
 
-$weeks=required_param('weeks', PARAM_INT);
-$self=required_param('self',PARAM_INT);
-$waitlist=required_param('waitlist',PARAM_INT);
+$weeks = required_param('weeks', PARAM_INT);
+$self = required_param('self', PARAM_INT);
+$waitlist = required_param('waitlist', PARAM_INT);
 
 require_login();
 user_download_csv($weeks, $self, $waitlist);
@@ -45,8 +44,9 @@ function user_download_csv($weeks, $self, $waitlist) {
             );
     $filename = clean_filename('Free_seats_report');
 
-    /* ob_end_clean(); */
-    if (ob_get_contents()) ob_end_clean();
+    if (ob_get_contents()) {
+        ob_end_clean();
+    }
 
     $csvexport = new csv_export_writer();
     $csvexport->set_filename($filename);
@@ -55,17 +55,17 @@ function user_download_csv($weeks, $self, $waitlist) {
     $cond = '';
     if ($self == 1 && $waitlist == 0) {
         $cond = 'AND {enrol}.enrol = "self"';
-    } elseif ($self == 0 && $waitlist == 1) {
+    } else if ($self == 0 && $waitlist == 1) {
         $cond = 'AND {enrol}.enrol = "waitlist"';
-    } elseif ($self == 1 && $waitlist == 1) {
+    } else if ($self == 1 && $waitlist == 1) {
         $cond = 'AND ({enrol}.enrol = "self" OR {enrol}.enrol = "waitlist")';
     } else {
         $cond = 'AND ({enrol}.enrol != "self" AND {enrol}.enrol != "waitlist")';
     }
 
-    $sql = 'SELECT {course}.id, {course}.fullname, {course}.startdate, {course_categories}.name AS category, 
+    $sql = 'SELECT {course}.id, {course}.fullname, {course}.startdate, {course_categories}.name AS category,
             SUM(DISTINCT({enrol}.customint3)) AS enrolmax_users,
-            COUNT({user_enrolments}.enrolid) AS enrolled_users   
+            COUNT({user_enrolments}.enrolid) AS enrolled_users
             FROM {course}
             RIGHT JOIN {enrol} ON ({course}.id = {enrol}.courseid)
             LEFT JOIN {user_enrolments} ON ({user_enrolments}.enrolid = {enrol}.id)
@@ -85,7 +85,7 @@ function user_download_csv($weeks, $self, $waitlist) {
             continue;
         }
 
-        $course_data = array();
+        $coursedata = array();
         foreach ($fields as $field => $unused) {
             if ($field == 'startdate') {
                 $date = usergetdate( $course->$field );
@@ -100,17 +100,17 @@ function user_download_csv($weeks, $self, $waitlist) {
             }
 
             if (is_array($course->$field)) {
-                $course_data[] = reset($course->$field);
+                $coursedata[] = reset($course->$field);
             } else {
-                $course_data[] = $course->$field;
+                $coursedata[] = $course->$field;
             }
         }
 
         if ( $course->enrolmax_users != 0 && ( $course->enrolmax_users - $course->enrolled_users ) == 0 ) {
-            unset($course_data);
+            unset($coursedata);
         }
 
-        $csvexport->add_data($course_data);
+        $csvexport->add_data($coursedata);
     }
 
     $csvexport->download_file();

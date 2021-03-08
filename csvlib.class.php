@@ -17,8 +17,7 @@
 /**
  * Copyright (C) 2014 onwards emeneo (http://www.emeneo.com)
  *
- * @package    blocks
- * @subpackage report_free_seats
+ * @package    block_report_free_seats
  * @copyright  2014 onwards emeneo (http://www.emeneo.com)
  * @author     Flotter Totte (flottertotte@emeneo.com)
  */
@@ -28,39 +27,26 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Library class for exporting data in CSV file.
  */
-
 class csv_export_writer {
-    /**
-     * @var string $delimiter  The name of the delimiter. Supported types(comma, tab, semicolon, colon, cfg)
-     */
-    var $delimiter;
-    /**
-     * @var string $csvenclosure  How fields with spaces and commas are enclosed.
-     */
-    var $csvenclosure;
-    /**
-     * @var string $mimetype  Mimetype of the file we are exporting.
-     */
-    var $mimetype;
-    /**
-     * @var string $filename  The filename for the csv file to be downloaded.
-     */
-    var $filename;
-    /**
-     * @var string $path  The directory path for storing the temporary csv file.
-     */
-    var $path;
-    /**
-     * @var resource $fp  File pointer for the csv file.
-     */
+    // Comment: @var string $delimiter  The name of the delimiter. Supported types(comma, tab, semicolon, colon, cfg).
+    public $delimiter;
+    // Comment: @var string $csvenclosure  How fields with spaces and commas are enclosed.
+    public $csvenclosure;
+    // Comment: @var string $mimetype  Mimetype of the file we are exporting.
+    public $mimetype;
+    // Comment: @var string $filename  The filename for the csv file to be downloaded.
+    public $filename;
+    // Comment: @var string $path  The directory path for storing the temporary csv file.
+    public $path;
+    // Comment: @var resource $fp  File pointer for the csv file.
     protected $fp;
 
     /**
      * Constructor for the csv export reader
      *
-     * @param string $delimiter      The name of the character used to seperate fields. Supported types(comma, tab, semicolon, colon, cfg)
-     * @param string $enclosure      The character used for determining the enclosures.
-     * @param string $mimetype       Mime type of the file that we are exporting.
+     * @param string $delimiter    Name of character used to seperate fields. Supported types(comma, tab, semicolon, colon, cfg)
+     * @param string $enclosure    Character used for determining the enclosures.
+     * @param string $mimetype     Mime type of the file that we are exporting.
      */
     public function __construct($delimiter = 'comma', $enclosure = '"', $mimetype = 'application/download') {
         $this->delimiter = $delimiter;
@@ -149,7 +135,7 @@ class csv_export_writer {
         if (is_https()) { // HTTPS sites - watch out for IE! KB812935 and KB316431.
             header('Cache-Control: max-age=10');
             header('Pragma: ');
-        } else { // normal http - prevent caching at all cost
+        } else { // Normal http - prevent caching at all cost.
             header('Cache-Control: private, must-revalidate, pre-check=0, post-check=0, max-age=0');
             header('Pragma: no-cache');
         }
@@ -224,29 +210,19 @@ class csv_export_writer {
  */
 class csv_import_reader {
 
-    /**
-     * @var int import identifier
-     */
+    // Identifier @var int import.
     private $_iid;
 
-    /**
-     * @var string which script imports?
-     */
+    // Which script imports @var?
     private $_type;
 
-    /**
-     * @var string|null Null if ok, error msg otherwise
-     */
+    // Null if ok, error msg otherwise@var string|null.
     private $_error;
 
-    /**
-     * @var array cached columns
-     */
+    // Cached columns@var array.
     private $_columns;
 
-    /**
-     * @var object file handle used during import
-     */
+    // Handle used during import @var object file.
     private $_fp;
 
     /**
@@ -272,32 +248,31 @@ class csv_import_reader {
      *
      * @param string $content the content to parse.
      * @param string $encoding content encoding
-     * @param string $delimiter_name separator (comma, semicolon, colon, cfg)
-     * @param string $column_validation name of function for columns validation, must have one param $columns
+     * @param string $delimitername separator (comma, semicolon, colon, cfg)
+     * @param string $columnvalidation name of function for columns validation, must have one param $columns
      * @param string $enclosure field wrapper. One character only.
      * @return bool false if error, count of data lines if ok; use get_error() to get error string
      */
-    public function load_csv_content($content, $encoding, $delimiter_name, $column_validation=null, $enclosure='"') {
+    public function load_csv_content($content, $encoding, $delimitername, $columnvalidation=null, $enclosure='"') {
         global $USER, $CFG;
 
         $this->close();
         $this->_error = null;
 
         $content = core_text::convert($content, $encoding, 'utf-8');
-        // remove Unicode BOM from first line
+        // Remove Unicode BOM from first line.
         $content = core_text::trim_utf8_bom($content);
-        // Fix mac/dos newlines
+        // Fix mac/dos newlines.
         $content = preg_replace('!\r\n?!', "\n", $content);
         // Remove any spaces or new lines at the end of the file.
-        if ($delimiter_name == 'tab') {
-            // trim() by default removes tabs from the end of content which is undesirable in a tab separated file.
+        if ($delimitername == 'tab') {
+            // By default trim() removes tabs from the end of content which is undesirable in a tab separated file.
             $content = trim($content, chr(0x20) . chr(0x0A) . chr(0x0D) . chr(0x00) . chr(0x0B));
         } else {
             $content = trim($content);
         }
 
-        $csv_delimiter = csv_import_reader::get_delimiter($delimiter_name);
-        // $csv_encode    = csv_import_reader::get_encoded_delimiter($delimiter_name);
+        $csvdelimiter = self::get_delimiter($delimitername);
 
         // Create a temporary file and store the csv file there,
         // do not try using fgetcsv() because there is nothing
@@ -312,9 +287,9 @@ class csv_import_reader {
         fseek($fp, 0);
         // Create an array to store the imported data for error checking.
         $columns = array();
-        // str_getcsv doesn't iterate through the csv data properly. It has
+        // The str_getcsv doesn't iterate through the csv data properly. It has
         // problems with line returns.
-        while ($fgetdata = fgetcsv($fp, 0, $csv_delimiter, $enclosure)) {
+        while ($fgetdata = fgetcsv($fp, 0, $csvdelimiter, $enclosure)) {
             // Check to see if we have an empty line.
             if (count($fgetdata) == 1) {
                 if ($fgetdata[0] !== null) {
@@ -325,21 +300,21 @@ class csv_import_reader {
                 $columns[] = $fgetdata;
             }
         }
-        $col_count = 0;
+        $colcount = 0;
 
-        // process header - list of columns
+        // Process header - list of columns.
         if (!isset($columns[0])) {
             $this->_error = get_string('csvemptyfile', 'error');
             fclose($fp);
             unlink($tempfile);
             return false;
         } else {
-            $col_count = count($columns[0]);
+            $colcount = count($columns[0]);
         }
 
         // Column validation.
-        if ($column_validation) {
-            $result = $column_validation($columns[0]);
+        if ($columnvalidation) {
+            $result = $columnvalidation($columns[0]);
             if ($result !== true) {
                 $this->_error = $result;
                 fclose($fp);
@@ -348,10 +323,10 @@ class csv_import_reader {
             }
         }
 
-        $this->_columns = $columns[0]; // cached columns
-        // check to make sure that the data columns match up with the headers.
+        $this->_columns = $columns[0]; // Cached columns.
+        // Check to make sure that the data columns match up with the headers.
         foreach ($columns as $rowdata) {
-            if (count($rowdata) !== $col_count) {
+            if (count($rowdata) !== $colcount) {
                 $this->_error = get_string('csvweirdcolumns', 'error');
                 fclose($fp);
                 unlink($tempfile);
@@ -421,7 +396,7 @@ class csv_import_reader {
         if (!$this->_fp = fopen($filename, "r")) {
             return false;
         }
-        //skip header
+        // Skip header.
         return (fgetcsv($this->_fp) !== false);
     }
 
@@ -486,7 +461,7 @@ class csv_import_reader {
      */
     public static function get_delimiter_list() {
         global $CFG;
-        $delimiters = array('comma' => ',', 'semicolon' => '; ','colon' => ':', 'tab' => '\\t');
+        $delimiters = array('comma' => ',', 'semicolon' => '; ', 'colon' => ':', 'tab' => '\\t');
         if (isset($CFG->CSV_DELIMITER) and strlen($CFG->CSV_DELIMITER) === 1 and !in_array($CFG->CSV_DELIMITER, $delimiters)) {
             $delimiters['cfg'] = $CFG->CSV_DELIMITER;
         }
@@ -499,15 +474,24 @@ class csv_import_reader {
      * @param string separator name
      * @return string delimiter char
      */
-    public static function get_delimiter($delimiter_name) {
+    public static function get_delimiter($delimitername) {
         global $CFG;
-        switch ($delimiter_name) {
-            case 'colon':     return ':';
-            case 'semicolon': return ';';
-            case 'tab':       return "\t";
-            case 'cfg':       if (isset($CFG->CSV_DELIMITER)) { return $CFG->CSV_DELIMITER; } // no break; fall back to comma
-            case 'comma':     return ',';
-            default :         return ',';  // If anything else comes in, default to comma.
+        switch ($delimitername) {
+            case 'colon':
+            return ':';
+            case 'semicolon':
+            return ';';
+            case 'tab':
+            return "\t";
+            case 'cfg':
+                if (isset($CFG->CSV_DELIMITER)) {
+                    return $CFG->CSV_DELIMITER;
+                } // No break; fall back to comma.
+            case 'comma':
+            return ',';
+            // If anything else comes in, default to comma.
+            default :
+            return ',';
         }
     }
 
@@ -518,12 +502,12 @@ class csv_import_reader {
      * @param string separator name
      * @return string encoded delimiter char
      */
-    public static function get_encoded_delimiter($delimiter_name) {
+    public static function get_encoded_delimiter($delimitername) {
         global $CFG;
-        if ($delimiter_name == 'cfg' and isset($CFG->CSV_ENCODE)) {
+        if ($delimitername == 'cfg' and isset($CFG->CSV_ENCODE)) {
             return $CFG->CSV_ENCODE;
         }
-        $delimiter = csv_import_reader::get_delimiter($delimiter_name);
+        $delimiter = self::get_delimiter($delimitername);
         return '&#'.ord($delimiter);
     }
 
@@ -539,7 +523,7 @@ class csv_import_reader {
 
         $filename = make_temp_directory('csvimport/'.$type.'/'.$USER->id);
 
-        // use current (non-conflicting) time stamp
+        // Use current (non-conflicting) time stamp.
         $iiid = time();
         while (file_exists($filename.'/'.$iiid)) {
             $iiid--;
