@@ -378,9 +378,6 @@ class csv_import_reader {
 
     /**
      * Init iterator.
-     *
-     * @global object
-     * @global object
      * @return bool Success
      */
     public function init() {
@@ -439,9 +436,6 @@ class csv_import_reader {
 
     /**
      * Cleanup temporary data
-     *
-     * @global object
-     * @global object
      * @param boolean $full true means do a full cleanup - all sessions for current user, false only the active iid
      */
     public function cleanup($full=false) {
@@ -498,7 +492,6 @@ class csv_import_reader {
     /**
      * Get encoded delimiter character
      *
-     * @global object
      * @param string separator name
      * @return string encoded delimiter char
      */
@@ -514,7 +507,6 @@ class csv_import_reader {
     /**
      * Create new import id
      *
-     * @global object
      * @param string who imports?
      * @return int iid
      */
